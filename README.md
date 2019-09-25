@@ -42,6 +42,21 @@ Based on closed-form solution, but only modeling critically damped spring. Using
 float exp = 1F / (1F + x + 0.48F * x * x + 0.235F * x * x * x);
 ```
 
+# References
+
+Analytical:
+
+-   http://www.entropy.energy/scholar/node/damped-harmonic-oscillator
+-   https://doc.lagout.org/Others/Game%20Development/Programming/Game%20Programming%20Gems%204.pdf
+
+Numerical:
+
+-   http://box2d.org/files/GDC2015/ErinCatto_NumericalMethods.pdf
+
+General:
+
+-   https://hplgit.github.io/num-methods-for-PDEs/doc/pub/vib/pdf/vib-4print-A4-2up.pdf
+
 # License
 
 MIT
