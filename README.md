@@ -22,6 +22,9 @@ Maybe not:
 
 # Screenshot or demo
 
+Closed-form solution:
+![](./Documentation~/closed-form.png)
+
 # License
 
 MIT
