@@ -1,0 +1,10 @@
+{
+    "name": "Thammin.UnitySpring.Editor",
+    "references": [
+      "Thammin.UnitySpring"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

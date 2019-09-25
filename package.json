@@ -1,0 +1,24 @@
+{
+    "name": "com.thammin.unity-spring",
+    "version": "0.0.1",
+    "displayName": "Unity Spring",
+    "description": "Spring physics that models a damped harmonic oscillator.",
+    "unity": "2019.1",
+    "unityRelease": "0b5",
+    "dependencies": {},
+    "keywords": [
+        "spring",
+        "physic",
+        "damped",
+        "harmonic",
+        "oscillator",
+        "tween",
+        "animation",
+        "dynamic"
+    ],
+    "author": {
+        "name": "Paul Young",
+        "email": "thammin@live.co.uk",
+        "url": "https://github.com/thammin"
+    }
+}
