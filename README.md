@@ -35,7 +35,7 @@ Source code: [link](https://github.com/Unity-Technologies/UnityCsReference/blob/
 
 Based on closed-form solution, but only modeling critically damped spring only. Using tweaked Exponential approximation (up to Taylor 3rd order) which claims as roughly 80 times faster and approximate less than 0.1% error than `exp` function.
 
-<img src="./taylor-exp.svg">
+<img src="./Documentation~/taylor-exp.svg">
 
 ```cs
 // tweaked coefficients
