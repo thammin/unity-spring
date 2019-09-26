@@ -6,10 +6,10 @@ Solvers:
 
 -   [x] [Closed-form solution for the ODE](http://www.ryanjuckett.com/programming/damped-springs/)
 -   [x] [Semi-implicit Euler method](https://en.wikipedia.org/wiki/Semi-implicit_Euler_method)
+-   [x] [Explicit Runge-Kutta 4th order aka RK4](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
 
 Maybe:
 
--   [ ] [Runge-Kutta 4th order aka RK4](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
 -   [ ] [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration)
 
 Maybe not:
@@ -17,6 +17,7 @@ Maybe not:
 -   [ ] [Explicit Euler aka Forward Euler](https://en.wikipedia.org/wiki/Euler_method)
 -   [ ] [Implicit Euler aka Backward Euler](https://en.wikipedia.org/wiki/Backward_Euler_method)
 -   [ ] [Mid-point method](https://en.wikipedia.org/wiki/Midpoint_method)
+-   [ ] [Implicit Runge-Kutta 4th order aka RK4](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods#Implicit_Runge%E2%80%93Kutta_methods)
 
 # Install
 
