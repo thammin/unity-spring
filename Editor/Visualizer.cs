@@ -123,19 +123,25 @@ namespace UnitySpring.Editor
 
             foreach (var s in springs) s.Reset();
 
-            var t = 0f;
+            // start values
+            for (var i = 0; i < springs.Length; i++)
+            {
+                drawPoint(0, springs[i].startValue, colors[i]);
+            }
+
+            // draw until end of axis x
+            var t = dt;
             while (t < gridSizeX)
             {
                 for (var i = 0; i < springs.Length; i++)
                 {
-                    drawPoint(t, springs[i].Evaluate(step), colors[i], springs[i].endValue);
+                    drawPoint(t, springs[i].Evaluate(step), colors[i]);
                 }
                 t += dt;
             }
 
-            void drawPoint(float x, float y, Color c, float ev)
+            void drawPoint(float x, float y, Color c)
             {
-                if (Mathf.Approximately(y, ev)) return;
                 var n = Mathf.FloorToInt(dt / 2);
                 n = Mathf.Clamp(n, 1, 5);
                 DrawRect(
