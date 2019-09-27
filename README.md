@@ -21,6 +21,12 @@ Maybe not:
 
 # Install
 
+via Package Manager UI
+
+```
+ssh://git@github.com/thammin/unity-spring.git
+```
+
 # Usage
 
 # Screenshot or demo
