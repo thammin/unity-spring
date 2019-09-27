@@ -29,6 +29,34 @@ ssh://git@github.com/thammin/unity-spring.git
 
 # Usage
 
+Every solver is just a simple class with few fields.
+
+```cs
+using UnityEngine;
+using Spring = UnitySpring.ClosedForm.Spring;
+
+public class Ball : MonoBehaviour
+{
+    Spring spring;
+
+    void Start()
+    {
+        // interpolate from -10f to 10f
+        spring = new Spring()
+        {
+            startValue = -10f,
+            endValue = 10f
+        };
+    }
+
+    void Update()
+    {
+        var x = spring.Evaluate(Time.deltaTime);
+        transform.position = new Vector3(x, 0f, 0f);
+    }
+}
+```
+
 # Screenshot or demo
 
 Visualizer:
