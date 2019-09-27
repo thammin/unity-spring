@@ -10,7 +10,6 @@ namespace UnitySpring
         public float endValue;
         public float initialVelocity;
 
-
         protected float currentValue;
         protected float currentVelocity;
 

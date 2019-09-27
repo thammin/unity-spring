@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEditor.EditorGUI;
 using System.Linq;
+using System.Reflection;
 
 namespace UnitySpring.Editor
 {
@@ -54,6 +55,8 @@ namespace UnitySpring.Editor
 
         // caches
         SpringBase[] springs;
+        FieldInfo stepSizeField;
+        int stepSizeFps;
         int fps = 60;
         float graphTime = 2f;
 
@@ -76,6 +79,12 @@ namespace UnitySpring.Editor
                 spring.initialVelocity = d.initialVelocity;
                 return spring;
             }).ToArray();
+
+            stepSizeField = currentType.GetField("stepSize", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (stepSizeField != null)
+            {
+                stepSizeFps = Mathf.CeilToInt(1f / (float)stepSizeField.GetValue(springs[0]));
+            }
         }
 
         void OnGUI()
@@ -144,6 +153,7 @@ namespace UnitySpring.Editor
         void DrawController()
         {
             EditorGUIUtility.labelWidth = 70;
+            var sliderWidth = GUILayout.Width(230);
 
             GUILayout.Space(10);
             EditorGUILayout.BeginHorizontal();
@@ -154,7 +164,7 @@ namespace UnitySpring.Editor
                 BeginChangeCheck();
                 {
                     var index = Array.IndexOf(springTypes, currentType);
-                    index = EditorGUILayout.Popup("Spring Type", index, springTypeOptions);
+                    index = EditorGUILayout.Popup("Spring Type:", index, springTypeOptions);
                     currentType = springTypes[index];
                 }
                 if (EndChangeCheck()) SetupSprings();
@@ -162,12 +172,27 @@ namespace UnitySpring.Editor
                 GUILayout.Space(10);
 
                 // fps
-                fps = EditorGUILayout.IntSlider("FPS", fps, 10, 120);
+                fps = EditorGUILayout.IntSlider("FPS:", fps, 10, 120, sliderWidth);
+
+                GUILayout.Space(10);
+
+                // step size
+                if (stepSizeField != null)
+                {
+                    BeginChangeCheck();
+                    {
+                        stepSizeFps = EditorGUILayout.IntSlider("Step FPS:", stepSizeFps, fps, 120, sliderWidth);
+                    }
+                    if (EndChangeCheck())
+                    {
+                        foreach (var s in springs) stepSizeField.SetValue(s, 1f / stepSizeFps);
+                    }
+                }
 
                 GUILayout.Space(10);
 
                 // graph time
-                graphTime = EditorGUILayout.Slider("Graph Time", graphTime, 0.1f, 5f);
+                graphTime = EditorGUILayout.Slider("Graph Time:", graphTime, 0.1f, 5f, sliderWidth);
 
                 GUILayout.Space(10);
             }

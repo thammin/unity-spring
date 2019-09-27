@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace UnitySpring.SemiImplicitEuler
 {
     /// <summary>
@@ -8,7 +10,8 @@ namespace UnitySpring.SemiImplicitEuler
     /// </summary>
     public class Spring : SpringBase
     {
-        bool isFirstStep = true;
+        float stepSize = 1f / 60f; // stable if < 1/51
+        bool isFirstEvaluate = true;
 
         public override void Reset()
         {
@@ -24,10 +27,10 @@ namespace UnitySpring.SemiImplicitEuler
 
         public override float Evaluate(float deltaTime)
         {
-            if (isFirstStep)
+            if (isFirstEvaluate)
             {
                 Reset();
-                isFirstStep = false;
+                isFirstEvaluate = false;
             }
 
             var c = damping;
@@ -37,11 +40,17 @@ namespace UnitySpring.SemiImplicitEuler
             var x = currentValue;
             var v = currentVelocity;
 
-            // springForce = -k * (x - endValue)
-            // dampingForce = -c * v
-            var a = (-k * (x - endValue) + -c * v) / m;
-            v = v + a * deltaTime;
-            x = x + v * deltaTime;
+            var steps = Mathf.Ceil(deltaTime / stepSize);
+            for (var i = 0; i < steps; i++)
+            {
+                var dt = i == steps - 1 ? deltaTime - i * stepSize : stepSize;
+
+                // springForce = -k * (x - endValue)
+                // dampingForce = -c * v
+                var a = (-k * (x - endValue) + -c * v) / m;
+                v += a * dt;
+                x += v * dt;
+            }
 
             currentValue = x;
             currentVelocity = v;
