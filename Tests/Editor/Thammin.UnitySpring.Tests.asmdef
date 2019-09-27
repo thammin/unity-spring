@@ -1,0 +1,12 @@
+﻿{
+    "name": "Thammin.UnitySpring.Tests",
+    "references": [
+      "Thammin.UnitySpring"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ]
+}

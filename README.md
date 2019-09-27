@@ -19,6 +19,10 @@ Maybe not:
 -   [ ] [Mid-point method](https://en.wikipedia.org/wiki/Midpoint_method)
 -   [ ] [Implicit Runge-Kutta 4th order aka RK4](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods#Implicit_Runge%E2%80%93Kutta_methods)
 
+Performance rough check:
+
+<img src="./Documentation~/performance.png" width="70%">
+
 # Install
 
 via Package Manager UI
@@ -65,7 +69,7 @@ Visualizer:
 
 # Faq
 
-## Unity SmoothDamp
+### Unity SmoothDamp
 
 Source code: [link](https://github.com/Unity-Technologies/UnityCsReference/blob/2019.3/Runtime/Export/Math/Mathf.cs#L302-L331)
 
