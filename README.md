@@ -25,8 +25,9 @@ Maybe not:
 
 # Screenshot or demo
 
-Closed-form solution:
-![](./Documentation~/closed-form.png)
+Visualizer:
+
+![](./Documentation~/visualizer.gif)
 
 # Faq
 
