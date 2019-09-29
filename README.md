@@ -33,7 +33,7 @@ ssh://git@github.com/thammin/unity-spring.git
 
 # Usage
 
-Every solver is just a simple class with few fields.
+Every solver is just a [simple class](https://github.com/thammin/unity-spring/blob/master/Runtime/SpringBase.cs) with few fields.
 
 ```cs
 using UnityEngine;
