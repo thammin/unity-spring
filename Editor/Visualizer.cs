@@ -10,8 +10,8 @@ namespace UnitySpring.Editor
     public class Visualizer : EditorWindow
     {
         // Graph
-        static readonly Rect Box = new Rect(100, 100, 1000, 500);
-        int graphOffsetY = 25;
+        static readonly Rect Box = new Rect(100, 100, 1020, 500);
+        int graphOffsetY = 65;
         int cellSize = 20;
         int offset = 10;
         Color gridColor = new Color(0.5f, 0.5f, 0.5f, 0.1f);
@@ -60,6 +60,15 @@ namespace UnitySpring.Editor
         int stepSizeFps;
         int fps = 60;
         float graphTime = 2f;
+        float damping;
+        float mass;
+        float stiffness;
+        float startValue;
+        float endValue;
+        float initialVelocity;
+
+        string[] graphModes = new string[] { "Presets", "Custom" };
+        int graphModeIndex = 0;
 
         [MenuItem("Tools/UnitySpring/Visualizer")]
         static void ShowWindow()
@@ -67,9 +76,9 @@ namespace UnitySpring.Editor
             GetWindowWithRect<Visualizer>(Box, true, "Unity Spring Visualizer", true);
         }
 
-        void OnEnable() => SetupSprings();
+        void OnEnable() => SetupPresetSprings();
 
-        void SetupSprings()
+        void SetupPresetSprings()
         {
             springs = dataset.Select(d =>
             {
@@ -81,11 +90,41 @@ namespace UnitySpring.Editor
                 return spring;
             }).ToArray();
 
+            SetupStepSize(springs[0]);
+        }
+
+        void SetupCustomSpring()
+        {
+            var spring = Activator.CreateInstance(currentType) as SpringBase;
+            damping = spring.damping;
+            mass = spring.mass;
+            stiffness = spring.stiffness;
+            startValue = spring.startValue = 10;
+            endValue = spring.endValue = 0;
+            initialVelocity = spring.initialVelocity = 0;
+            springs = new SpringBase[] { spring };
+
+            SetupStepSize(spring);
+        }
+
+        void SetupStepSize(SpringBase spring)
+        {
             stepSizeField = currentType.GetField("stepSize", BindingFlags.NonPublic | BindingFlags.Instance);
             if (stepSizeField != null)
             {
-                stepSizeFps = Mathf.CeilToInt(1f / (float)stepSizeField.GetValue(springs[0]));
+                stepSizeFps = Mathf.CeilToInt(1f / (float)stepSizeField.GetValue(spring));
             }
+        }
+
+        void UpdateCustomSpring()
+        {
+            var spring = springs[0];
+            spring.damping = damping;
+            spring.mass = mass;
+            spring.stiffness = stiffness;
+            spring.startValue = startValue;
+            spring.endValue = endValue;
+            spring.initialVelocity = initialVelocity;
         }
 
         void OnGUI()
@@ -109,11 +148,25 @@ namespace UnitySpring.Editor
                 drawLine(0, y, gridCountX * cellSize, 1, color);
             }
 
+            for (var t = 0f; t < graphTime; t++)
+            {
+                var x = t / (graphTime / gridSizeX) / cellSize;
+                drawHatchMark(x, axisY, t);
+            }
+
             void drawLine(float x, float y, float w, float h, Color c)
             {
                 x = x * cellSize + offset - 0.5f;
                 y = y * cellSize + offset - 0.5f + graphOffsetY;
                 DrawRect(new Rect(x, y, w, h), c);
+            }
+
+            void drawHatchMark(float x, float y, float unit)
+            {
+                x = x * cellSize + offset - 0.5f;
+                y = y * cellSize + offset + -0.5f + graphOffsetY;
+                DrawRect(new Rect(x, y - 10, 1, 21), axisColor);
+                GUI.Label(new Rect(x + 2, y + 6, 10, 10), unit.ToString());
             }
         }
 
@@ -174,7 +227,17 @@ namespace UnitySpring.Editor
                     index = EditorGUILayout.Popup("Spring Type:", index, springTypeOptions);
                     currentType = springTypes[index];
                 }
-                if (EndChangeCheck()) SetupSprings();
+                if (EndChangeCheck())
+                {
+                    if (graphModeIndex == 0)
+                    {
+                        SetupPresetSprings();
+                    }
+                    else
+                    {
+                        SetupCustomSpring();
+                    }
+                }
 
                 GUILayout.Space(10);
 
@@ -202,6 +265,65 @@ namespace UnitySpring.Editor
                 graphTime = EditorGUILayout.Slider("Graph Time:", graphTime, 0.1f, 5f, sliderWidth);
 
                 GUILayout.Space(10);
+            }
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            {
+                GUILayout.Space(10);
+
+                // graph mode
+                BeginChangeCheck();
+                {
+                    graphModeIndex = EditorGUILayout.Popup("Modes:", graphModeIndex, graphModes);
+                }
+                if (EndChangeCheck())
+                {
+                    if (graphModeIndex == 0)
+                    {
+                        SetupPresetSprings();
+                    }
+                    else
+                    {
+                        SetupCustomSpring();
+                    }
+                }
+
+                // custom spring parameters
+                BeginDisabledGroup(graphModeIndex == 0);
+                BeginChangeCheck();
+                {
+                    GUILayout.Space(10);
+                    EditorGUIUtility.labelWidth = 100;
+                    startValue = EditorGUILayout.FloatField("Start Value:", startValue);
+                    GUILayout.Space(10);
+                    endValue = EditorGUILayout.FloatField("End Value:", endValue);
+                    GUILayout.Space(10);
+                    initialVelocity = EditorGUILayout.FloatField("Initial Velocity:", initialVelocity);
+                    GUILayout.Space(10);
+                }
+                if (EndChangeCheck()) UpdateCustomSpring();
+                EndDisabledGroup();
+            }
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            {
+                // custom spring parameters
+                BeginDisabledGroup(graphModeIndex == 0);
+                BeginChangeCheck();
+                {
+                    EditorGUIUtility.labelWidth = 70;
+                    GUILayout.Space(10);
+                    damping = EditorGUILayout.Slider("Damping:", damping, 0f, 100f);
+                    GUILayout.Space(10);
+                    mass = EditorGUILayout.Slider("Mass:", mass, 0f, 100f);
+                    GUILayout.Space(10);
+                    stiffness = EditorGUILayout.Slider("Stiffness:", stiffness, 0f, 200f);
+                    GUILayout.Space(10);
+                }
+                if (EndChangeCheck()) UpdateCustomSpring();
+                EndDisabledGroup();
             }
             EditorGUILayout.EndHorizontal();
 
