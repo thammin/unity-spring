@@ -27,7 +27,8 @@ namespace UnitySpring.Editor
         {
             typeof(ClosedForm.Spring),
             typeof(SemiImplicitEuler.Spring),
-            typeof(ExplicitRK4.Spring)
+            typeof(ExplicitRK4.Spring),
+            typeof(VerletIntegration.Spring)
         };
         String[] springTypeOptions => springTypes
             .Select(t => t.FullName)

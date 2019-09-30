@@ -20,6 +20,10 @@ namespace UnitySpring.Tests
         public static void ExplicitRK4()
             => Benchmark(CreateSprings<ExplicitRK4.Spring>(), "ExplicitRK4");
 
+        [Test]
+        public static void VerletIntegration()
+            => Benchmark(CreateSprings<VerletIntegration.Spring>(), "VerletIntegration");
+
         static void Benchmark(SpringBase[] springs, string name)
         {
             var sw = new Stopwatch();

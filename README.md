@@ -7,10 +7,7 @@ Solvers:
 -   [x] [Closed-form solution for the ODE](http://www.ryanjuckett.com/programming/damped-springs/)
 -   [x] [Semi-implicit Euler method](https://en.wikipedia.org/wiki/Semi-implicit_Euler_method)
 -   [x] [Explicit Runge-Kutta 4th order aka RK4](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
-
-Maybe:
-
--   [ ] [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration)
+-   [x] [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration)
 
 Maybe not:
 
@@ -19,7 +16,7 @@ Maybe not:
 -   [ ] [Mid-point method](https://en.wikipedia.org/wiki/Midpoint_method)
 -   [ ] [Implicit Runge-Kutta 4th order aka RK4](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods#Implicit_Runge%E2%80%93Kutta_methods)
 
-Performance rough check:
+Performance rough check with 2.6 GHz Intel Core i7:
 
 <img src="./Documentation~/performance.png" width="70%">
 
