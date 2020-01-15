@@ -64,7 +64,7 @@ Visualizer:
 
 ![](./Documentation~/visualizer.gif)
 
-# Faq
+# FAQ
 
 ### Unity SmoothDamp
 

@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Diagnostics;
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 namespace UnitySpring.Tests
@@ -9,20 +10,24 @@ namespace UnitySpring.Tests
         const int Count = 100000;
 
         [Test]
-        public static void ClosedForm()
+        public static void _ClosedForm()
             => Benchmark(CreateSprings<ClosedForm.Spring>(), "ClosedForm");
 
         [Test]
-        public static void SemiImplicitEuler()
+        public static void _SemiImplicitEuler()
             => Benchmark(CreateSprings<SemiImplicitEuler.Spring>(), "SemiImplicitEuler");
 
         [Test]
-        public static void ExplicitRK4()
+        public static void _ExplicitRK4()
             => Benchmark(CreateSprings<ExplicitRK4.Spring>(), "ExplicitRK4");
 
         [Test]
-        public static void VerletIntegration()
+        public static void _VerletIntegration()
             => Benchmark(CreateSprings<VerletIntegration.Spring>(), "VerletIntegration");
+
+        [Test]
+        public static void UnitySmoothDamp()
+            => Benchmark(CreateSprings<UnitySmoothDamp>(), "UnitySmoothDamp");
 
         static void Benchmark(SpringBase[] springs, string name)
         {
@@ -36,7 +41,7 @@ namespace UnitySpring.Tests
                 count++;
             }
 
-            Debug.Log($"[{name}] Average time for {Count} spring per frame : {sum / count} ms");
+            Debug.Log($"[{name}] Average time for {Count} spring per frame : {(sum / count).ToString("0.000")} ms");
 
             double Step()
             {
@@ -60,7 +65,31 @@ namespace UnitySpring.Tests
 
         static double GetPreciseTime(Stopwatch sw)
         {
-            return 1000.0 * (double)sw.ElapsedTicks / Stopwatch.Frequency;
+            return 1000.0 * (double) sw.ElapsedTicks / Stopwatch.Frequency;
+        }
+    }
+
+    class UnitySmoothDamp : SpringBase
+    {
+        float smoothTime = 0.1f;
+        float maxSpeed = Mathf.Infinity;
+
+        public override void Reset()
+        {
+            currentValue = startValue;
+            currentVelocity = initialVelocity;
+        }
+
+        public override void UpdateEndValue(float value, float velocity)
+        {
+            endValue = value;
+            currentVelocity = velocity;
+        }
+
+        public override float Evaluate(float deltaTime)
+        {
+            currentValue = Mathf.SmoothDamp(currentValue, endValue, ref currentVelocity, smoothTime, maxSpeed, deltaTime);
+            return currentValue;
         }
     }
 }
