@@ -4,17 +4,17 @@ Implement multiple solvers for damped harmonic oscillator.
 
 Solvers:
 
--   [x] [Closed-form solution for the ODE](http://www.ryanjuckett.com/programming/damped-springs/)
--   [x] [Semi-implicit Euler method](https://en.wikipedia.org/wiki/Semi-implicit_Euler_method)
--   [x] [Explicit Runge-Kutta 4th order aka RK4](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
--   [x] [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration)
+- [x] [Closed-form solution for the ODE](http://www.ryanjuckett.com/programming/damped-springs/)
+- [x] [Semi-implicit Euler method](https://en.wikipedia.org/wiki/Semi-implicit_Euler_method)
+- [x] [Explicit Runge-Kutta 4th order aka RK4](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
+- [x] [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration)
 
 Maybe not:
 
--   [ ] [Explicit Euler aka Forward Euler](https://en.wikipedia.org/wiki/Euler_method)
--   [ ] [Implicit Euler aka Backward Euler](https://en.wikipedia.org/wiki/Backward_Euler_method)
--   [ ] [Mid-point method](https://en.wikipedia.org/wiki/Midpoint_method)
--   [ ] [Implicit Runge-Kutta 4th order aka RK4](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods#Implicit_Runge%E2%80%93Kutta_methods)
+- [ ] [Explicit Euler aka Forward Euler](https://en.wikipedia.org/wiki/Euler_method)
+- [ ] [Implicit Euler aka Backward Euler](https://en.wikipedia.org/wiki/Backward_Euler_method)
+- [ ] [Mid-point method](https://en.wikipedia.org/wiki/Midpoint_method)
+- [ ] [Implicit Runge-Kutta 4th order aka RK4](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods#Implicit_Runge%E2%80%93Kutta_methods)
 
 Performance rough check with 2.6 GHz Intel Core i7:
 
@@ -26,6 +26,12 @@ via Package Manager UI
 
 ```
 ssh://git@github.com/thammin/unity-spring.git
+```
+
+via [OpenUPM](https://openupm.com/packages/com.thammin.unity-spring/)
+
+```
+openupm add com.thammin.unity-spring
 ```
 
 # Usage
@@ -83,16 +89,16 @@ float exp = 1F / (1F + x + 0.48F * x * x + 0.235F * x * x * x);
 
 Analytical:
 
--   http://www.entropy.energy/scholar/node/damped-harmonic-oscillator
--   https://doc.lagout.org/Others/Game%20Development/Programming/Game%20Programming%20Gems%204.pdf
+- http://www.entropy.energy/scholar/node/damped-harmonic-oscillator
+- https://doc.lagout.org/Others/Game%20Development/Programming/Game%20Programming%20Gems%204.pdf
 
 Numerical:
 
--   http://box2d.org/files/GDC2015/ErinCatto_NumericalMethods.pdf
+- http://box2d.org/files/GDC2015/ErinCatto_NumericalMethods.pdf
 
 General:
 
--   https://hplgit.github.io/num-methods-for-PDEs/doc/pub/vib/pdf/vib-4print-A4-2up.pdf
+- https://hplgit.github.io/num-methods-for-PDEs/doc/pub/vib/pdf/vib-4print-A4-2up.pdf
 
 # License
 
